@@ -1,24 +1,32 @@
 :root{
   --background-color: #ccc;
   background-color: var(--background-color);
-  font-size: 80px;
+  font-size: 120px;
+  font-family: sans-serif;
 }
 
 body {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  font-size: 0.5rem;
+  margin: 50px;
+  height: 50px;
 }
 
 #board {
   display: inline-grid;
   justify-content: center;
-  grid-template-columns: repeat(3, 100px);
-  grid-template-rows: repeat(3, 100px);
+  grid-template-columns: repeat(3, 150px);
+  grid-template-rows: repeat(3, 150px);
   gap: 5px;
 
   background-color: black;
-  position: relative;
-  top: 100px;
 }
 
 #board > button {
