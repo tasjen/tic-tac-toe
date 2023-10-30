@@ -1,6 +1,7 @@
 :root{
   --background-color: #ccc;
   background-color: var(--background-color);
+  font-size: 80px;
 }
 
 body {
@@ -21,6 +22,7 @@ body {
 }
 
 #board > button {
+  font-size: 1rem;
   border: none;
   background-color: var(--background-color);
 }
