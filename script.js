@@ -1,8 +1,8 @@
 const gameBoard = (function () {
   const board = document.querySelector("#board");
-  const turn = document.querySelector('#turn');
+  const turn = document.querySelector("#turn");
   const replay = document.querySelector("#replay");
-  
+
   const players = [player("X"), player("O")];
   const cells = new Array(9);
   const winnerMove = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]];
@@ -18,17 +18,20 @@ const gameBoard = (function () {
     //check the winner (from stackoverflow)
     for (let move of winnerMove) {
       if (move.every((e) => playerTurn.getMove().includes(e))) {
+        for (let n of move) {
+          board.querySelector(`:nth-child(${n})`)
+          .style.backgroundColor = "#888";
+        }
         turn.textContent = `${playerTurn.getName()} wins`;
         replay.style.display = "block";
-        return;
+        return true;
       }
     }
     if (!cells.includes(undefined)) {
-      turn.textContent = "Tie"
+      turn.textContent = "Tie";
       replay.style.display = "block";
-      return;
+      return true;
     }
-    nextPlayer();
   };
   const restartGame = () => {
     clearBoard();
@@ -50,11 +53,11 @@ const gameBoard = (function () {
       cell.id = i + 1;
       cell.addEventListener("click", () => {
         //if the cell is not taken by any player
-        if (!getCell(cell.id - 1) && !(replay.style.display === 'block')) {
+        if (!getCell(cell.id - 1) && !(replay.style.display === "block")) {
           setCell(cell.id - 1, playerTurn.getName());
           cell.textContent = playerTurn.getName();
           playerTurn.addMove(+cell.id);
-          checkGameOver();
+          if (!checkGameOver()) nextPlayer();
         }
       });
       board.appendChild(cell);
