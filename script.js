@@ -11,7 +11,7 @@ const gameBoard = (function () {
   const getCell = (i) => cells[i-1];
   const setCell = (i, player) => (cells[i-1] = player);
   const nextPlayer = () => {
-    playerTurn = players[(players.indexOf(playerTurn) + 1) % players.length];
+    playerTurn = playerTurn === players[0] ? players[1]: players[0];
     turn.textContent = `${playerTurn.getName()}'s turn`;
   };
   const checkGameOver = () => {
