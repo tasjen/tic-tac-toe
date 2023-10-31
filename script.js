@@ -8,14 +8,14 @@ const gameBoard = (function () {
   const winnerMove = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]];
   let playerTurn = players[Math.floor(Math.random() * 2)];
 
-  const getCell = (i) => cells[i];
-  const setCell = (i, player) => (cells[i] = player);
+  const getCell = (i) => cells[i-1];
+  const setCell = (i, player) => (cells[i-1] = player);
   const nextPlayer = () => {
     playerTurn = players[(players.indexOf(playerTurn) + 1) % players.length];
     turn.textContent = `${playerTurn.getName()}'s turn`;
   };
   const checkGameOver = () => {
-    //check the winner (from stackoverflow)
+    //check the winner (from stackOverflow)
     for (let move of winnerMove) {
       if (move.every((e) => playerTurn.getMove().includes(e))) {
         for (let n of move) {
@@ -53,8 +53,8 @@ const gameBoard = (function () {
       cell.id = i + 1;
       cell.addEventListener("click", () => {
         //if the cell is not taken by any player
-        if (!getCell(cell.id - 1) && !(replay.style.display === "block")) {
-          setCell(cell.id - 1, playerTurn.getName());
+        if (!getCell(cell.id) && !(replay.style.display === "block")) {
+          setCell(cell.id, playerTurn.getName());
           cell.textContent = playerTurn.getName();
           playerTurn.addMove(+cell.id);
           if (!checkGameOver()) nextPlayer();
