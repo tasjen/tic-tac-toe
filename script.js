@@ -14,7 +14,7 @@ const gameBoard = (function () {
     playerTurn = playerTurn === players[0] ? players[1]: players[0];
     turn.textContent = `${playerTurn.getName()}'s turn`;
   };
-  const checkGameOver = () => {
+  const isGameOver = () => {
     //check the winner (from stackOverflow)
     for (let move of winnerMove) {
       if (move.every((e) => playerTurn.getMove().includes(e))) {
@@ -22,17 +22,23 @@ const gameBoard = (function () {
           board.querySelector(`:nth-child(${n})`)
           .style.backgroundColor = "#888";
         }
-        turn.textContent = `${playerTurn.getName()} wins`;
-        replay.style.display = "block";
+        displayGameOver(`${playerTurn.getName()} wins`);
         return true;
       }
     }
     if (!cells.includes(undefined)) {
-      turn.textContent = "Tie";
-      replay.style.display = "block";
+      displayGameOver("Tie");
       return true;
     }
+    return false;
   };
+  const displayGameOver = (result) => {
+    turn.textContent = result;
+    replay.style.display = "block"
+    for (let i = 1; i <= 9; i++){
+      board.querySelector(`:nth-child(${i})`).style.cursor = "default";
+    }
+  }
   const restartGame = () => {
     clearBoard();
     renderBoard();
@@ -57,7 +63,8 @@ const gameBoard = (function () {
           setCell(cell.id, playerTurn.getName());
           cell.textContent = playerTurn.getName();
           playerTurn.addMove(+cell.id);
-          if (!checkGameOver()) nextPlayer();
+          cell.style.cursor = 'default';
+          if (!isGameOver()) nextPlayer();
         }
       });
       board.appendChild(cell);

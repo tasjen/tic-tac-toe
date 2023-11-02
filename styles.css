@@ -26,7 +26,6 @@ p {
   grid-template-columns: repeat(3, 150px);
   grid-template-rows: repeat(3, 150px);
   gap: 5px;
-
   background-color: black;
 }
 
@@ -34,6 +33,7 @@ p {
   font-size: 1rem;
   border: none;
   background-color: var(--background-color);
+  cursor: pointer;
 }
 
 #replay {
